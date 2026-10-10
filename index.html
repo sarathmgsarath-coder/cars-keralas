@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maruti Sales Pro - Kerala (Popular Vehicles Arena)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans antialiased">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 text-white p-2 rounded-lg font-bold text-lg flex items-center justify-center shadow-inner">
+                    <i class="fa-solid fa-car-side"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-wide text-white">MARUTI SALES PRO <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded ml-2 border border-blue-500/30">Popular Vehicles (Trivandrum)</span></h1>
+                    <p class="text-xs text-slate-400">Arena Price Sheet & Offer Hub (Excl. Basic Accessories)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <div class="hidden md:flex items-center space-x-2 bg-slate-900 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
+                    <i class="fa-solid fa-location-dot text-red-400"></i>
+                    <span class="text-slate-300">Location:</span>
+                    <span class="text-white font-medium">Killipalam, Trivandrum</span>
+                </div>
+                <button onclick="switchTab('leads')" class="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition">
+                    <i class="fa-solid fa-address-book text-amber-400"></i>
+                    <span class="hidden sm:inline">Leads & Quotes</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
+
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-2 border-b border-slate-700 pb-4 mb-6 overflow-x-auto">
+            <button onclick="switchTab('catalog')" id="tab-catalog" class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white transition flex items-center space-x-2 shadow">
+                <i class="fa-solid fa-car"></i><span>Model Catalog & Gallery</span>
+            </button>
+            <button onclick="switchTab('calculator')" id="tab-calculator" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-calculator"></i><span>Price & EMI Calculator</span>
+            </button>
+            <button onclick="switchTab('brochures')" id="tab-brochures" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-file-pdf"></i><span>PDF Brochures & Spec Sheets</span>
+            </button>
+            <button onclick="switchTab('offers')" id="tab-offers" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition flex items-center space-x-2">
+                <i class="fa-solid fa-tags"></i><span>Offers & Discount Hub</span>
+            </button>
+        </div>
+
+        <!-- TAB 1: CATALOG & GALLERY -->
+        <div id="section-catalog" class="space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div class="flex items-center space-x-3">
+                    <span class="text-sm font-medium text-slate-300">Channel:</span>
+                    <div class="inline-flex rounded-lg p-1 bg-slate-900 border border-slate-700">
+                        <button onclick="filterChannel('all')" id="btn-chan-all" class="px-3 py-1.5 rounded-md text-xs font-semibold bg-blue-600 text-white transition">All Models</button>
+                        <button onclick="filterChannel('arena')" id="btn-chan-arena" class="px-3 py-1.5 rounded-md text-xs font-semibold text-slate-400 hover:text-white transition">Maruti Arena</button>
+                    </div>
+                </div>
+                <div class="relative flex-1 max-w-xs">
+                    <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchModel" onkeyup="searchModels()" placeholder="Search model or variant..." class="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-blue-500">
+                </div>
+            </div>
+
+            <div id="modelGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- TAB 2: PRICE & EMI CALCULATOR -->
+        <div id="section-calculator" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-lg">
+                <h2 class="text-lg font-bold text-white mb-4 flex items-center space-x-2">
+                    <i class="fa-solid fa-calculator text-blue-400"></i><span>Popular Vehicles Kerala On-Road Price & EMI Calculator</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Select Model</label>
+                            <select id="calcModelSelect" onchange="updateCalcVariants()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Select Variant & Transmission</label>
+                            <select id="calcVariantSelect" onchange="calculatePrice()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Insurance / LTCP Balance</label>
+                                <input type="text" id="calcInsuranceLtcp" readonly class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-amber-400 font-semibold focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Accessories Package (₹)</label>
+                                <input type="number" id="calcAccessories" value="0" oninput="calculatePrice()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500" placeholder="Basic Accessories Excluded">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-400 mb-1">Down Payment (₹)</label>
+                            <input type="number" id="calcDownPayment" value="150000" step="10000" oninput="calculateEMI()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Interest Rate (% p.a.)</label>
+                                <input type="number" id="calcInterest" value="8.5" step="0.1" oninput="calculateEMI()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-1">Loan Tenure (Months)</label>
+                                <select id="calcTenure" onchange="calculateEMI()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                                    <option value="36">3 Years (36M)</option>
+                                    <option value="48">4 Years (48M)</option>
+                                    <option value="60" selected>5 Years (60M)</option>
+                                    <option value="72">6 Years (72M)</option>
+                                    <option value="84">7 Years (84M)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown -->
+                    <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 flex flex-col justify-between shadow-inner">
+                        <div>
+                            <h3 class="text-sm font-bold text-blue-400 uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">Exact Price Sheet Breakdown</h3>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between"><span class="text-slate-400">Ex-Showroom Price:</span><span id="resExShowroom" class="font-semibold text-white">₹0</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">TCS (1% if applicable):</span><span id="resTcs" class="font-semibold text-white">₹0</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Insurance (1yr OD + 3yr TP):</span><span id="resIns" class="font-semibold text-white">₹0</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">Road Tax:</span><span id="resRoadTax" class="font-semibold text-white">₹0</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">FASTag:</span><span id="resFastag" class="font-semibold text-white">₹600</span></div>
+                                <div class="flex justify-between"><span class="text-slate-400">MSP Plus & MSRP:</span><span id="resMsp" class="font-semibold text-white">₹0</span></div>
+                                <div class="flex justify-between text-slate-500 italic"><span>Basic Accessories:</span><span>Excluded (₹0)</span></div>
+                                <div class="flex justify-between pt-2 border-t border-slate-800 text-sm font-bold"><span class="text-blue-300">Total On-Road Price:</span><span id="resOnRoad" class="text-blue-400">₹0</span></div>
+                            </div>
+
+                            <div class="mt-6 pt-4 border-t border-slate-800">
+                                <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2">Estimated Monthly EMI</h4>
+                                <div class="bg-slate-800 p-3 rounded-lg flex justify-between items-center">
+                                    <div>
+                                        <p class="text-[10px] text-slate-400">Loan Amount: <span id="resLoanAmount" class="text-white font-medium">₹0</span></p>
+                                        <p class="text-lg font-extrabold text-white" id="resEmi">₹0 <span class="text-xs font-normal text-slate-400">/mo</span></p>
+                                    </div>
+                                    <button onclick="generateCustomerQuote()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg text-xs font-semibold shadow transition">
+                                        <i class="fa-solid fa-file-invoice-dollar mr-1"></i> Generate Quote
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: PDF BROCHURES -->
+        <div id="section-brochures" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-file-pdf text-red-400"></i><span>Official Brochures & Spec Sheets</span>
+                        </h2>
+                        <p class="text-xs text-slate-400">Download and share PDFs via WhatsApp.</p>
+                    </div>
+                </div>
+                <div id="brochureGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: OFFERS & DISCOUNT HUB -->
+        <div id="section-offers" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <h2 class="text-lg font-bold text-white mb-2 flex items-center space-x-2">
+                    <i class="fa-solid fa-tags text-amber-400"></i><span>Popular Vehicles Kerala Oct 2026 Offer Summary</span>
+                </h2>
+                <p class="text-xs text-slate-400 mb-6">Consumer Offer & Booking Support (Upto 20th Oct) extracted from official offer sheet.</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-900 text-slate-400 border-b border-slate-700">
+                                <th class="p-3">Model</th>
+                                <th class="p-3">Variant / Fuel</th>
+                                <th class="p-3 font-bold text-blue-400">Consumer Offer</th>
+                                <th class="p-3 font-bold text-amber-400">Booking Support (Upto 20th Oct)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offersTableBody" class="divide-y divide-slate-700/50">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEADS & QUOTES -->
+        <div id="section-leads" class="hidden space-y-6">
+            <div class="bg-slate-800 border border-slate-700 rounded-xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-address-book text-amber-400"></i><span>Customer Leads & Quotations</span>
+                        </h2>
+                    </div>
+                </div>
+                <div id="leadsList" class="space-y-4">
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODEL DETAIL MODAL -->
+    <div id="modelModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl">
+            <div class="p-6 relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 bg-slate-700 hover:bg-slate-600 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const carData = [
+            {
+                id: "alto_k10",
+                name: "Alto K10 NEW",
+                channel: "arena",
+                tagline: "Popular Vehicles - Trivandrum",
+                image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=800&q=80",
+                priceRange: "₹3,69,900 - ₹6,42,918",
+                desc: "Exact price list effective from 19.09.2026. Basic accessories excluded.",
+                variants: [
+                    { name: "STD 1L 5MT", fuel: "Petrol", trans: "Manual", ex: 369900, tcs: 0, ins: 15989, road: 36990, fastag: 600, msp: 7669, msrp: 885, ltcp: 21256, onRoad: 439063 },
+                    { name: "LXI 1L 5MT", fuel: "Petrol", trans: "Manual", ex: 399900, tcs: 0, ins: 16531, road: 39990, fastag: 600, msp: 8259, msrp: 885, ltcp: 28660, onRoad: 473194 },
+                    { name: "VXI 1L 5MT", fuel: "Petrol", trans: "Manual", ex: 452400, tcs: 0, ins: 17477, road: 45240, fastag: 600, msp: 9439, msrp: 885, ltcp: 31123, onRoad: 533071 },
+                    { name: "VXI+ 1L 5MT", fuel: "Petrol", trans: "Manual", ex: 499900, tcs: 0, ins: 18332, road: 49990, fastag: 600, msp: 10383, msrp: 885, ltcp: 33350, onRoad: 587120 },
+                    { name: "VXI 1L AGS", fuel: "Petrol", trans: "Automatic", ex: 497401, tcs: 0, ins: 18288, road: 49740, fastag: 600, msp: 10383, msrp: 885, ltcp: 33234, onRoad: 584327 },
+                    { name: "VXI+ 1L AGS", fuel: "Petrol", trans: "Automatic", ex: 544900, tcs: 0, ins: 19144, road: 70837, fastag: 600, msp: 11327, msrp: 885, ltcp: 35460, onRoad: 654723 },
+                    { name: "LXI CNG 1L 5MT", fuel: "CNG", trans: "Manual", ex: 484401, tcs: 0, ins: 18513, road: 48440, fastag: 600, msp: 10029, msrp: 885, ltcp: 33390, onRoad: 569899 },
+                    { name: "VXI CNG 1L 5MT", fuel: "CNG", trans: "Manual", ex: 534399, tcs: 0, ins: 19441, road: 69472, fastag: 600, msp: 11091, msrp: 885, ltcp: 35789, onRoad: 642918 }
+                ],
+                colors: [{ name: "Sizzling Red", hex: "#b91c1c" }, { name: "Silky Silver", hex: "#94a3b8" }],
+                brochure: "Alto_K10_Brochure.pdf",
+                offers: [
+                    { variant: "Alto K10 (P) LXI", consumer: 25000, booking: 5000 },
+                    { variant: "Alto K10 (P) MT (VXI)", consumer: 15000, booking: 5000 },
+                    { variant: "Alto K10 (P) MT (VXI+)", consumer: 15000, booking: 5000 },
+                    { variant: "Alto K10 (P) AGS (VXI / VXI+)", consumer: 15000, booking: 5000 },
+                    { variant: "Alto K10 (C)", consumer: 10000, booking: 0 }
+                ]
+            },
+            {
+                id: "swift",
+                name: "The Epic New SWIFT 6 Air Bag",
+                channel: "arena",
+                tagline: "Popular Vehicles - Trivandrum",
+                image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+                priceRange: "₹5,83,900 - ₹10,56,142",
+                desc: "Exact price list effective from 19.09.2026. Basic accessories excluded.",
+            
